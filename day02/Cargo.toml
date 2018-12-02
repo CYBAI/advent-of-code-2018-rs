@@ -1,0 +1,11 @@
+[package]
+name = "day02"
+version = "0.1.0"
+authors = ["CYBAI <cyb.ai.815@gmail.com>"]
+edition = "2018"
+
+[[bin]]
+name = "part1"
+path = "src/part1/main.rs"
+
+[dependencies]

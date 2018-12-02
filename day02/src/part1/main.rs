@@ -1,0 +1,51 @@
+use std::collections::HashMap;
+use std::fs::File;
+use std::io::prelude::*;
+
+fn calculate(contents: String) -> (i32, i32) {
+    contents
+        .lines()
+        .map(|line| {
+            line.split("")
+                .filter(|s| *s != "")
+                .fold(HashMap::new(), |mut a, s| {
+                    {
+                        let counter = a.entry(s.to_string()).or_insert(0);
+                        *counter += 1;
+                    }
+                    a
+                })
+                .into_iter()
+                .filter(|(_, v)| *v == 2 || *v == 3)
+                .collect()
+        })
+        .fold((0, 0), |mut acc, h: HashMap<String, i32>| {
+            let reversed_key_h: HashMap<i32, String> = h.into_iter().map(|(k, v)| (v, k)).collect();
+
+            if reversed_key_h.get(&2).is_some() {
+                acc.0 += 1;
+            }
+
+            if reversed_key_h.get(&3).is_some() {
+                acc.1 += 1;
+            }
+
+            acc
+        })
+}
+
+fn main() {
+    let mut f = File::open("./input").expect("FILE NOT FOUND");
+
+    let mut contents = String::new();
+    f.read_to_string(&mut contents).expect("CONTENT READ ERROR");
+
+    let result: (i32, i32) = calculate(contents);
+
+    println!("Answer: {:?}", result.0 * result.1);
+}
+
+#[test]
+fn test() {
+    assert_eq!(calculate("abcdef\nbababc\nabbcde\nabcccd\naabcdd\nabcdee\nababab".to_string()), (4, 3));
+}
