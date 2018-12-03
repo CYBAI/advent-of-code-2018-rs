@@ -8,6 +8,10 @@ edition = "2018"
 name = "part1"
 path = "src/part1/main.rs"
 
+[[bin]]
+name = "part2"
+path = "src/part2/main.rs"
+
 [lib]
 name = "day03"
 path = "src/lib.rs"
