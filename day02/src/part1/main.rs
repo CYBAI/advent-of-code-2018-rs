@@ -1,6 +1,5 @@
 use std::collections::HashMap;
-use std::fs::File;
-use std::io::prelude::*;
+use aoc_utils::read_file;
 
 fn calculate(contents: String) -> (i32, i32) {
     contents
@@ -16,7 +15,7 @@ fn calculate(contents: String) -> (i32, i32) {
                     a
                 })
                 .into_iter()
-                .filter(|(_, v)| *v == 2 || *v == 3)
+                .filter(|&(_, v)| v == 2 || v == 3)
                 .collect()
         })
         .fold((0, 0), |mut acc, h: HashMap<String, i32>| {
@@ -35,14 +34,11 @@ fn calculate(contents: String) -> (i32, i32) {
 }
 
 fn main() {
-    let mut f = File::open("./input").expect("FILE NOT FOUND");
+    if let Ok(contents) = read_file("./input") {
+        let result: (i32, i32) = calculate(contents);
 
-    let mut contents = String::new();
-    f.read_to_string(&mut contents).expect("CONTENT READ ERROR");
-
-    let result: (i32, i32) = calculate(contents);
-
-    println!("Answer: {:?}", result.0 * result.1);
+        println!("Answer: {:?}", result.0 * result.1);
+    }
 }
 
 #[test]

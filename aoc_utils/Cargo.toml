@@ -1,0 +1,11 @@
+[package]
+name = "aoc_utils"
+version = "0.1.0"
+authors = ["CYBAI <cyb.ai.815@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+
+[lib]
+name = "aoc_utils"
+path = "lib.rs"

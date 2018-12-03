@@ -1,6 +1,5 @@
 use std::collections::HashMap;
-use std::fs::File;
-use std::io::prelude::*;
+use aoc_utils::read_file;
 
 #[allow(unused)]
 fn find_num<'a>(
@@ -69,25 +68,22 @@ fn loop_version(numbers: &Vec<i32>) {
 }
 
 fn main() {
-    let mut f = File::open("./input").expect("FILE NOT FOUND");
+    if let Ok(contents) = read_file("./input") {
+        let numbers: Vec<i32> = contents
+            .split("\n")
+            .map(|n| n.parse::<i32>().unwrap())
+            .collect();
 
-    let mut contents = String::new();
-    f.read_to_string(&mut contents).expect("CONTENT READ ERROR");
+        // First version written with `loop`
+        loop_version(&numbers);
 
-    let numbers: Vec<i32> = contents
-        .split("\n")
-        .map(|n| n.parse::<i32>().unwrap())
-        .collect();
-
-    // First version written with `loop`
-    loop_version(&numbers);
-
-    // Due to not support TCO in rust, I can't use recursive version
-    // to run with `input` but it works for these sample cases for part 2.
-    //
-    // let mut hash = HashMap::new();
-    // let result = find_num(None, &mut hash, &numbers, None);
-    // println!("{:?}", result.0);
+        // Due to not support TCO in rust, I can't use recursive version
+        // to run with `input` but it works for these sample cases for part 2.
+        //
+        // let mut hash = HashMap::new();
+        // let result = find_num(None, &mut hash, &numbers, None);
+        // println!("{:?}", result.0);
+    }
 }
 
 #[test]

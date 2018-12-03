@@ -12,4 +12,9 @@ path = "src/part1/main.rs"
 name = "part2"
 path = "src/part2/main.rs"
 
+[lib]
+name = "day02"
+path = "src/lib.rs"
+
 [dependencies]
+aoc_utils = { path = "../aoc_utils" }
