@@ -1,29 +1,6 @@
-#[macro_use]
-extern crate lazy_static;
-
 use aoc_utils::read_file;
-use regex::Regex;
-
-#[derive(Debug)]
-struct Claim {
-    number: i32,
-    x: i32,
-    y: i32,
-    width: i32,
-    height: i32,
-}
-
-impl Claim {
-    fn new(number: i32, x: i32, y: i32, width: i32, height: i32) -> Self {
-        Claim {
-            number,
-            x,
-            y,
-            width,
-            height,
-        }
-    }
-}
+use day03::Claim;
+use day03::CLAIM_REGEX;
 
 fn overlapped(a: &((i32, i32), (i32, i32)), b: &((i32, i32), (i32, i32))) -> bool {
     let a_w = a.0;
@@ -48,12 +25,6 @@ fn overlapped(a: &((i32, i32), (i32, i32)), b: &((i32, i32), (i32, i32))) -> boo
 }
 
 fn main() {
-    lazy_static! {
-        pub static ref CLAIM_REGEX: Regex =
-            Regex::new(r"\#(?P<n>\d+) @ (?P<x>\d+),(?P<y>\d+): (?P<width>\d+)x(?P<height>\d+)",)
-                .unwrap();
-    }
-
     if let Ok(contents) = read_file("./input") {
         let claims: Vec<((i32, i32), (i32, i32))> = contents
             .lines()
