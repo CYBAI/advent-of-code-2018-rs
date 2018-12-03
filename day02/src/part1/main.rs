@@ -1,5 +1,5 @@
-use std::collections::HashMap;
 use aoc_utils::read_file;
+use std::collections::HashMap;
 
 fn calculate(contents: String) -> (i32, i32) {
     contents
@@ -43,5 +43,8 @@ fn main() {
 
 #[test]
 fn test() {
-    assert_eq!(calculate("abcdef\nbababc\nabbcde\nabcccd\naabcdd\nabcdee\nababab".to_string()), (4, 3));
+    assert_eq!(
+        calculate("abcdef\nbababc\nabbcde\nabcccd\naabcdd\nabcdee\nababab".to_string()),
+        (4, 3)
+    );
 }

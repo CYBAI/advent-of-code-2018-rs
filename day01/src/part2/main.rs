@@ -1,5 +1,5 @@
-use std::collections::HashMap;
 use aoc_utils::read_file;
+use std::collections::HashMap;
 
 #[allow(unused)]
 fn find_num<'a>(
