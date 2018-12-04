@@ -1,0 +1,19 @@
+[package]
+name = "day04"
+version = "0.1.0"
+authors = ["CYBAI <cyb.ai.815@gmail.com>"]
+edition = "2018"
+
+[[bin]]
+name = "part1"
+path = "src/part1/main.rs"
+
+[lib]
+name = "day04"
+path = "src/lib.rs"
+
+[dependencies]
+regex = "1"
+lazy_static = "1.2.0"
+aoc_utils = { path = "../aoc_utils" }
+
