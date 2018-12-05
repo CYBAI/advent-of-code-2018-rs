@@ -24,10 +24,7 @@ fn main() {
                     return Some(Guard::new(
                         time,
                         caps.name("guard_id")
-                            .and_then(|id| match id.as_str().parse::<i32>() {
-                                Ok(id) => Some(id),
-                                Err(_) => None,
-                            }),
+                            .and_then(|id| id.as_str().parse::<i32>().ok()),
                         Action::parse_str_to_action(&caps["action"]).unwrap(),
                     ));
                 }
