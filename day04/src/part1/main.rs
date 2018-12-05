@@ -24,7 +24,7 @@ fn main() {
                     return Some(Guard::new(
                         time,
                         caps.name("guard_id")
-                            .map_or(None, |id| match id.as_str().parse::<i32>() {
+                            .and_then(|id| match id.as_str().parse::<i32>() {
                                 Ok(id) => Some(id),
                                 Err(_) => None,
                             }),
@@ -48,9 +48,9 @@ fn main() {
                 let time = guard.get_time();
 
                 {
-                    let cache = acc.2.entry(acc.0).or_insert(HashMap::new());
+                    let cache = acc.2.entry(acc.0).or_insert_with(HashMap::new);
 
-                    let minutes_vec = cache.entry(time.get_date_string()).or_insert(vec![]);
+                    let minutes_vec = cache.entry(time.get_date_string()).or_insert_with(Vec::new);
 
                     let previous_action = acc.1;
 
