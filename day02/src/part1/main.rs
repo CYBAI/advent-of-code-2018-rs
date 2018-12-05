@@ -1,7 +1,7 @@
 use aoc_utils::read_file;
 use std::collections::HashMap;
 
-fn calculate(contents: String) -> (i32, i32) {
+fn calculate(contents: &str) -> (i32, i32) {
     contents
         .lines()
         .map(|line| {
@@ -35,7 +35,7 @@ fn calculate(contents: String) -> (i32, i32) {
 
 fn main() {
     if let Ok(contents) = read_file("./input") {
-        let result: (i32, i32) = calculate(contents);
+        let result: (i32, i32) = calculate(&contents);
 
         println!("Answer: {:?}", result.0 * result.1);
     }
