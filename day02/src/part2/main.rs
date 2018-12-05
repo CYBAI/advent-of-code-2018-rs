@@ -25,7 +25,7 @@ fn main() {
     if let Ok(contents) = read_file("./input") {
         let inputs: Vec<String> = contents
             .lines()
-            .map(|line| line.split("").collect())
+            .map(|line| line.to_string())
             .collect();
 
         for i in 1..inputs.len() {
