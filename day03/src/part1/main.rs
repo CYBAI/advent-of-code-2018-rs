@@ -20,7 +20,7 @@ fn main() {
 
                 None
             })
-            .map(|claim| {
+            .flat_map(|claim| {
                 let mut v = vec![];
 
                 for i in 0..claim.width {
@@ -31,7 +31,6 @@ fn main() {
 
                 v
             })
-            .flatten()
             .fold(HashMap::new(), |mut acc, coord| {
                 {
                     let counter = acc.entry(coord).or_insert(0);
