@@ -1,0 +1,17 @@
+[package]
+name = "day05"
+version = "0.1.0"
+authors = ["CYBAI <cyb.ai.815@gmail.com>"]
+edition = "2018"
+
+[[bin]]
+name = "part1"
+path = "src/part1/main.rs"
+
+[lib]
+name = "day05"
+path = "src/lib.rs"
+
+[dependencies]
+aoc_utils = { path = "../aoc_utils" }
+
