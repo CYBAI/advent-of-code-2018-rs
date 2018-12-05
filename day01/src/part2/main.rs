@@ -5,12 +5,12 @@ use std::collections::HashMap;
 fn find_num<'a>(
     total: Option<i32>,
     hash: &'a mut HashMap<i32, i32>,
-    numbers: &'a Vec<i32>,
+    numbers: &'a [i32],
     index: Option<i32>,
 ) -> (
     Option<i32>,
     &'a mut HashMap<i32, i32>,
-    &'a Vec<i32>,
+    &'a [i32],
     Option<i32>,
 ) {
     let current_index = match index {
@@ -26,7 +26,7 @@ fn find_num<'a>(
     let current_total = total + numbers[current_index as usize];
 
     match hash.get(&current_total) {
-        Some(_) => (Some(current_total), hash, &numbers, Some(current_index)),
+        Some(_) => (Some(current_total), hash, numbers, Some(current_index)),
         None => {
             hash.insert(current_total, 0);
 
@@ -36,12 +36,12 @@ fn find_num<'a>(
                 current_index + 1
             };
 
-            find_num(Some(current_total), hash, &numbers, Some(next_index))
+            find_num(Some(current_total), hash, numbers, Some(next_index))
         }
     }
 }
 
-fn loop_version(numbers: &Vec<i32>) {
+fn loop_version(numbers: &[i32]) {
     let mut result = HashMap::new();
 
     let mut i = 1;
@@ -70,7 +70,7 @@ fn loop_version(numbers: &Vec<i32>) {
 fn main() {
     if let Ok(contents) = read_file("./input") {
         let numbers: Vec<i32> = contents
-            .split("\n")
+            .split('\n')
             .map(|n| n.parse::<i32>().unwrap())
             .collect();
 
