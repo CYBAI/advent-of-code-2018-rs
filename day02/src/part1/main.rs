@@ -8,7 +8,9 @@ fn calculate(contents: &str) -> (i32, i32) {
             line.split("")
                 .filter(|s| *s != "")
                 .fold(HashMap::new(), |mut a, s| {
-                    a.entry(s.to_string()).and_modify(|counter| *counter += 1).or_insert(1);
+                    a.entry(s.to_string())
+                        .and_modify(|counter| *counter += 1)
+                        .or_insert(1);
 
                     a
                 })

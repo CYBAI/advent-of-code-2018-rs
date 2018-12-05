@@ -83,7 +83,9 @@ fn main() {
             .clone()
             .into_iter()
             .fold(HashMap::new(), |mut acc, n| {
-                acc.entry(n).and_modify(|counter| *counter += 1).or_insert(1);
+                acc.entry(n)
+                    .and_modify(|counter| *counter += 1)
+                    .or_insert(1);
 
                 acc
             })

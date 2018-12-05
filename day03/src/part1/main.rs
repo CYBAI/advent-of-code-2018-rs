@@ -32,7 +32,9 @@ fn main() {
                 v
             })
             .fold(HashMap::new(), |mut acc, coord| {
-                acc.entry(coord).and_modify(|counter| *counter += 1).or_insert(1);
+                acc.entry(coord)
+                    .and_modify(|counter| *counter += 1)
+                    .or_insert(1);
 
                 acc
             })
