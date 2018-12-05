@@ -7,8 +7,13 @@ fn find_one_diff(a: &str, b: &str) -> Option<String> {
         return Some(
             a.chars()
                 .zip(b.chars())
-                .filter(|&(a, b)| a == b)
-                .map(|(v, _)| v)
+                .filter_map(|(a, b)| {
+                    if a == b {
+                        Some(a)
+                    } else {
+                        None
+                    }
+                })
                 .collect(),
         );
     }
