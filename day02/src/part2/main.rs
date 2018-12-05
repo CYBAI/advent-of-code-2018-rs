@@ -7,13 +7,7 @@ fn find_one_diff(a: &str, b: &str) -> Option<String> {
         return Some(
             a.chars()
                 .zip(b.chars())
-                .filter_map(|(a, b)| {
-                    if a == b {
-                        Some(a)
-                    } else {
-                        None
-                    }
-                })
+                .filter_map(|(a, b)| if a == b { Some(a) } else { None })
                 .collect(),
         );
     }
@@ -23,10 +17,7 @@ fn find_one_diff(a: &str, b: &str) -> Option<String> {
 
 fn main() {
     if let Ok(contents) = read_file("./input") {
-        let inputs: Vec<String> = contents
-            .lines()
-            .map(|line| line.to_string())
-            .collect();
+        let inputs: Vec<String> = contents.lines().map(|line| line.to_string()).collect();
 
         for i in 1..inputs.len() {
             let (left, right) = inputs.split_at(i);
