@@ -1,33 +1,11 @@
 use aoc_utils::read_file;
-use day06::COORDINATE_REGEX;
-use day06::find_manhattan_distance;
+use day06::{find_bounds, find_manhattan_distance, parse_coordinates};
 use std::collections::HashMap;
 
 fn main() {
     if let Ok(contents) = read_file("./input") {
-        let coordinates = contents
-            .split('\n')
-            .filter_map(|line| match COORDINATE_REGEX.captures(line) {
-                Some(caps) => match (caps["x"].parse::<i32>(), caps["y"].parse::<i32>()) {
-                    (Ok(x), Ok(y)) => Some((x, y)),
-                    _ => None,
-                },
-                None => None,
-            })
-            .collect::<Vec<(i32, i32)>>();
-
-        let bounds = coordinates
-            .iter()
-            .fold(None, |bounds, coordinate| match bounds {
-                None => Some((coordinate.0, coordinate.1, coordinate.0, coordinate.1)),
-                Some(bounds) => {
-                    let min_x = bounds.0.min(coordinate.0);
-                    let min_y = bounds.1.min(coordinate.1);
-                    let max_x = bounds.2.max(coordinate.0);
-                    let max_y = bounds.3.max(coordinate.1);
-                    Some((min_x, min_y, max_x, max_y))
-                }
-            });
+        let coordinates = parse_coordinates(&contents);
+        let bounds = find_bounds(&coordinates);
 
         let (min_x, min_y, max_x, max_y) = match bounds {
             Some(bounds) => bounds,
