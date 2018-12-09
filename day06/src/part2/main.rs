@@ -1,5 +1,6 @@
 use aoc_utils::read_file;
 use day06::{find_bounds, find_manhattan_distance, parse_coordinates};
+use itertools::Itertools;
 
 fn main() {
     let maximum = 10000;
@@ -13,23 +14,17 @@ fn main() {
             None => return,
         };
 
-        let mut counter = 0;
-
-        for i in min_x..=max_x {
-            for j in min_y..=max_y {
-                let distances = coordinates
+        let result: i32 = (min_x..=max_x)
+            .cartesian_product(min_y..=max_y)
+            .filter(|(x, y)| {
+                coordinates
                     .iter()
-                    .map(|c| find_manhattan_distance(*c, (i, j)))
-                    .collect::<Vec<i32>>();
+                    .map(|c| find_manhattan_distance(*c, (*x, *y)))
+                    .sum::<i32>()
+                    < maximum
+            })
+            .count() as i32;
 
-                let sum: i32 = distances.iter().sum();
-
-                if sum < maximum {
-                    counter += 1;
-                }
-            }
-        }
-
-        println!("{:?}", counter);
+        println!("{:?}", result);
     }
 }
