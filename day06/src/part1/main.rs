@@ -1,5 +1,6 @@
 use aoc_utils::read_file;
 use day06::{find_bounds, find_manhattan_distance, parse_coordinates};
+use itertools::Itertools;
 use std::collections::HashMap;
 
 fn main() {
@@ -12,15 +13,18 @@ fn main() {
             None => return,
         };
 
-        let mut hash: HashMap<i32, (i32, bool)> = HashMap::new();
-
-        for i in min_x..=max_x {
-            for j in min_y..=max_y {
-                let distances = coordinates
-                    .iter()
-                    .map(|c| find_manhattan_distance(*c, (i, j)))
-                    .collect::<Vec<i32>>();
-
+        let result = (min_x..=max_x)
+            .cartesian_product(min_y..=max_y)
+            .map(|(x, y)| {
+                (
+                    (x, y),
+                    coordinates
+                        .iter()
+                        .map(|c| find_manhattan_distance(*c, (x, y)))
+                        .collect::<Vec<i32>>(),
+                )
+            })
+            .filter_map(|(coordinate, distances)| {
                 let min = distances.iter().min().unwrap();
 
                 let mins = distances
@@ -30,10 +34,17 @@ fn main() {
                     .collect::<Vec<i32>>();
 
                 if mins.len() == 1 {
-                    let on_x_bound = i == min_x || i == max_x;
-                    let on_y_bound = j == min_y || j == max_y;
+                    Some((coordinate, Some(mins[0])))
+                } else {
+                    Some((coordinate, None))
+                }
+            })
+            .fold(HashMap::new(), |mut acc, ((x, y), min)| {
+                if let Some(min) = min {
+                    let on_x_bound = x == min_x || x == max_x;
+                    let on_y_bound = y == min_y || y == max_y;
 
-                    let (counter, on_bound) = hash.entry(mins[0]).or_insert((0, false));
+                    let (counter, on_bound) = acc.entry(min).or_insert((0, false));
 
                     if !*on_bound && (on_x_bound || on_y_bound) {
                         *on_bound = true;
@@ -41,15 +52,14 @@ fn main() {
 
                     *counter += 1;
                 }
-            }
-        }
 
-        let result = hash
+                acc
+            })
             .iter()
-            .filter(|(_, (_, on_bound))| !on_bound)
-            .max_by_key(|(_, (counter, _))| counter)
+            .filter_map(|(_, (counter, on_bound))| if !on_bound { Some(*counter) } else { None })
+            .max()
             .unwrap();
 
-        println!("{:?}", (result.1).0);
+        println!("{:?}", result);
     }
 }
