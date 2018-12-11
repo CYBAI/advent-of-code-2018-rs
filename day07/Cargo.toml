@@ -1,0 +1,20 @@
+[package]
+authors = ["CYBAI <cyb.ai.815@gmail.com>"]
+edition = "2018"
+name = "day07"
+version = "0.1.0"
+
+[[bin]]
+name = "part1"
+path = "src/part1/main.rs"
+
+[dependencies]
+lazy_static = "1.2.0"
+regex = "1.1.0"
+
+[dependencies.aoc_utils]
+path = "../aoc_utils"
+
+[lib]
+name = "day07"
+path = "src/lib.rs"
